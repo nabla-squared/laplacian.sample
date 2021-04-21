@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis_sample.word">
+  <!--
+  The words field.
+  -->
+  <select id="words" resultType="hashmap">
+  SELECT *
+  FROM t_word
+  <if test="args.lemmas.size > 0">
+  WHERE
+    lemma IN <foreach item="lemma" collection="args.lemmas" separator="," open="(" close=")">#{lemma}</foreach>
+  </if>
+  </select>
+</mapper>

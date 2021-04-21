@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="multi_db_sample.word_list">
+  <!--
+  The word_lists field.
+  -->
+  <select id="wordLists" resultType="hashmap">
+  SELECT
+    t_word_list.name AS "name",
+    t_word_list_entry.lemma AS "content.lemma"
+  FROM
+    t_word_list,
+    t_word_list_entry
+  WHERE
+    t_word_list.name = t_word_list_entry.word_list_name
+  <if test="args.names.size > 0">
+  AND
+    name IN <foreach item="name" collection="args.names" separator="," open="(" close=")">#{name}</foreach>
+  </if>
+  </select>
+  <!--
+  The content field.
+  -->
+  <select id="content" resultType="hashmap">
+  SELECT
+    *
+  FROM
+    t_word
+  WHERE
+    t_word.lemma = #{self.lemma}
+  </select>
+</mapper>

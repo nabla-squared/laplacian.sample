@@ -1,0 +1,68 @@
+graphql_types:
+- name: word_list
+  group: mybatis_sample
+  data_model_name: word_list
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: word_lists
+    multiple: true
+    field_type: graphql_type
+    root_field: true
+    graphql_type_name: word_list
+    graphql_type_group: mybatis_sample
+    arguments:
+    - name: names
+      type: string
+      multiple: true
+    fetcher:
+      type: mybatis
+      statement_type: select
+      datasource_name: word_list_main_db
+      statement: |
+        SELECT
+          t_word_list.name AS "name",
+          t_word_list_entry.lemma AS "content.lemma"
+        FROM
+          t_word_list,
+          t_word_list_entry
+        WHERE
+          t_word_list.name = t_word_list_entry.word_list_name
+        <if test="args.names.size > 0">
+        AND
+          name IN <foreach item="name" collection="args.names" separator="," open="(" close=")">#{name}</foreach>
+        </if>
+
+  - name: content
+    context_data_model_name: word_list_entry
+    field_type: graphql_type
+    graphql_type_name: word
+    graphql_type_group: mybatis_sample
+    fetcher:
+      type: mybatis
+      datasource_name: word_list_main_db
+      statement_type: select
+      is_batch: true
+      statement: |
+        SELECT
+          t_word.*
+        FROM
+          t_word,
+          (SELECT * FROM (VALUES
+            <foreach item="key" collection="keys" index="index" separator=",">
+            (#{index}, #{key.lemma})
+            </foreach>
+          ) AS T(index, lemma)) AS keys
+        WHERE
+          t_word.lemma = keys.lemma
+        ORDER BY
+          keys.index
+
+#      is_batch: false
+#      statement: |
+#        SELECT
+#          *
+#        FROM
+#          t_word
+#        WHERE
+#          t_word.lemma = #{self.lemma}

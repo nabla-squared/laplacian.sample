@@ -1,0 +1,25 @@
+"""
+A graphql type representing an item of word.
+"""
+type MybatisSampleWord {
+    """
+    The lemma of this word.
+    """
+    lemma: String!,
+    """
+    The rank of this word.
+    """
+    rank: Int!,
+    """
+    The frequency of this word.
+    """
+    frequency: Int!,
+    """
+    The japanese of this word.
+    """
+    japanese: String!,
+    """
+    The commentary of this word.
+    """
+    commentary: String!,
+}

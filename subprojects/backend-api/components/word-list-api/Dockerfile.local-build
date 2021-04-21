@@ -1,0 +1,10 @@
+
+
+FROM adoptopenjdk:11-jdk-hotspot
+RUN mkdir /app
+WORKDIR /app
+COPY ./entrypoint.sh entrypoint.sh
+
+COPY ./build/libs/word-list-api*.jar api.jar
+
+ENTRYPOINT ["/app/entrypoint.sh"]

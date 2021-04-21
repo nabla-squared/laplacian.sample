@@ -1,0 +1,17 @@
+"""
+The root query resolver for the multi_db_sample type group.
+"""
+type MultiDbSample {
+  """
+  The word_lists field.
+  """
+  wordLists(
+    names: [String!],
+  ): [MultiDbSampleWordList]
+  """
+  The words field.
+  """
+  words(
+    lemmas: [String!],
+  ): [MultiDbSampleWord]
+}

@@ -1,0 +1,44 @@
+plugins {
+  id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+  id 'org.jetbrains.kotlin.plugin.spring' version "$kotlinVersion"
+  id 'org.springframework.boot' version "$springBootVersion"
+  id 'io.spring.dependency-management' version "$springDependencyVersion"
+}
+
+group = "laplacian.sample"
+version = "1.0.0"
+
+defaultTasks 'bootJar'
+
+dependencies {
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+  implementation 'org.jetbrains.kotlin:kotlin-reflect'
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutineVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinxCoroutineVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$kotlinxCoroutineVersion"
+  implementation "io.projectreactor.kotlin:reactor-kotlin-extensions:$reactorKotlinExtensionVersion"
+  implementation 'org.springframework.boot:spring-boot-starter-webflux'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$springbootMybatisVersion"
+  implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+  implementation "com.graphql-java:graphql-java-spring-boot-starter-webflux:$graphqlJavaWebfluxVersion"
+  implementation "com.graphql-java:graphql-java-extended-scalars:$graphqlExtendedScalarVersion"
+  implementation "net.ttddyy:datasource-proxy:$datasourceProxyVersion"
+  runtimeOnly "org.postgresql:postgresql:$postgresJdbcDriverVersion"
+  runtimeOnly "mysql:mysql-connector-java:$mysqlJdbcDriverVersion"
+  implementation "laplacian.sample:word-list-api-lib:1.0.0"
+  testImplementation 'org.jetbrains.kotlin:kotlin-test'
+  testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
+}
+
+repositories {
+  maven { url '../../mvn-repo' }
+  mavenCentral()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    freeCompilerArgs = [ '-Xjsr305=strict' ]
+    jvmTarget = "$kotlinJvmTarget"
+  }
+}

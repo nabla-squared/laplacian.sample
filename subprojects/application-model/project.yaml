@@ -1,0 +1,9 @@
+project:
+  group: laplacian-sample
+  name: application-model
+  type: application-model
+  namespace: laplacian.sample
+  version: '1.0.0'
+  description:
+    en: |
+      The application-model project.

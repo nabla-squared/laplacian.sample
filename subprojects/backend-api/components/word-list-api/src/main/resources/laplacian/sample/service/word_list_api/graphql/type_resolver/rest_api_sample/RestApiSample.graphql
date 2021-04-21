@@ -1,0 +1,17 @@
+"""
+The root query resolver for the rest_api_sample type group.
+"""
+type RestApiSample {
+  """
+  The word_lists field.
+  """
+  wordLists(
+    names: [String!],
+  ): [RestApiSampleWordList]
+  """
+  The words field.
+  """
+  words(
+    lemmas: [String!],
+  ): [RestApiSampleWord]
+}

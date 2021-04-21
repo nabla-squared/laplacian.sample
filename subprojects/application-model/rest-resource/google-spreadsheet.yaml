@@ -1,0 +1,31 @@
+rest_resources:
+- name: google_spreadsheet
+  base_url: https://content-sheets.googleapis.com/v4/spreadsheets
+  operations:
+  - name: get_values
+    arguments:
+    - name: range
+      type: string
+    - name: spreadsheet_id
+      type: string
+    response:
+      type: object
+    method: GET
+    path: /{spreadsheet_id}/values/{range}
+    path_parameters:
+    - name: spreadsheet_id
+      type: string
+      value: |
+        args.spreadsheetId
+    - name: range
+      type: string
+      value: |
+        args.range
+    query_parameters:
+    - name: key
+      type: string
+      value: |
+        conf.apiKey
+  configurations:
+  - name: api-key
+    category: google-spreadsheet

@@ -1,0 +1,115 @@
+version: '3'
+networks:
+  frontend:
+  backend:
+
+services:
+# @+services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.backend-api-project-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/{if deployment.isa_postgres_container_deployment}/docker-compose_services_.yaml.hbs@
+  #
+  # word_list_main_db
+  #
+  word-list-main-db:
+    image: postgres:latest
+    container_name: word-list-main-db
+    ports:
+    - '5432:5432'
+    expose:
+    - '5432'
+    environment:
+    - 'POSTGRES_USER=test'
+    - 'POSTGRES_PASSWORD=secret'
+    - 'POSTGRES_DB=word-list-main-db'
+    networks:
+    - backend
+# @services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.backend-api-project-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/{if deployment.isa_postgres_container_deployment}/docker-compose_services_.yaml.hbs@
+# @+services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.backend-api-project-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/{if deployment.isa_mysql_container_deployment}/docker-compose_services_.yaml.hbs@
+  #
+  # word_list_sub_db
+  #
+  word-list-sub-db:
+    image: mysql:latest
+    container_name: word-list-sub-db
+    ports:
+    - '3306:3306'
+    expose:
+    - '3306'
+    environment:
+    - 'MYSQL_ALLOW_EMPTY_PASSWORD=yes'
+    - 'MYSQL_RANDOM_ROOT_PASSWORD=yes'
+    - 'MYSQL_USER=test'
+    - 'MYSQL_PASSWORD=secret'
+    - 'MYSQL_DATABASE=word-list-sub-db'
+    networks:
+    - backend
+# @services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.backend-api-project-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/{if deployment.isa_mysql_container_deployment}/docker-compose_services_.yaml.hbs@
+# @+services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.backend-api-springboot2-service-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/{with deployment.component as component}/{if (eq deployment.type 'springboot2_api_service_container_deployment')}/docker-compose_services_.yaml.hbs@
+  #
+  # word_list_api
+  #
+  word-list-api:
+    build:
+      context: ../../components/word-list-api
+      dockerfile: Dockerfile.local-build
+    container_name: word-list-api
+    ports:
+    - '8080:8080'
+    - '5005:5005'
+    - '9010:9010'
+    expose:
+    - '8080'
+    - '5005'
+    - '9010'
+    volumes:
+    -  './data/word-lists.json:/app/data/word-lists.json:ro'
+    -  './data/words.json:/app/data/words.json:ro'
+    environment:
+    - 'API_VERSION=1.0.0'
+    - 'ENABLE_DEBUG=true'
+    - 'DEBUG_PORT=5005'
+    - 'ENABLE_JMX=true'
+    - 'JMX_PORT=9010'
+    - 'DATASOURCE_WORD_LIST_MAIN_DB_USERNAME=test'
+    - 'DATASOURCE_WORD_LIST_MAIN_DB_PASSWORD=secret'
+    - 'DATASOURCE_WORD_LIST_MAIN_DB_JDBC_URL=jdbc:postgresql://word-list-main-db/word-list-main-db'
+    - 'DATASOURCE_WORD_LIST_SUB_DB_USERNAME=test'
+    - 'DATASOURCE_WORD_LIST_SUB_DB_PASSWORD=secret'
+    - 'DATASOURCE_WORD_LIST_SUB_DB_JDBC_URL=jdbc:mysql://word-list-sub-db/word-list-sub-db'
+    - 'GOOGLE_SPREADSHEET_API_KEY=[API_KEY]'
+    - 'REST_API_SAMPLE_WORD_SPREADSHEET_ID=[SPREAD_SHEET_ID]'
+    networks:
+    - backend
+
+# @services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.backend-api-springboot2-service-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/{with deployment.component as component}/{if (eq deployment.type 'springboot2_api_service_container_deployment')}/docker-compose_services_.yaml.hbs@
+# @+services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.dataset-flyway-migration-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/docker-compose_services_.yaml.hbs@
+#
+  # word_list_main_db migration task
+  #
+  word-list-main-db-migration-migration:
+    build:
+      context: ./word-list-main-db-migration
+      dockerfile: Dockerfile
+    container_name: word-list-main-db-migration
+    environment:
+    - 'DATASOURCE_USERNAME=test'
+    - 'DATASOURCE_PASSWORD=secret'
+    - 'DATASOURCE_JDBC_URL=jdbc:postgresql://word-list-main-db/word-list-main-db'
+    networks:
+    - backend
+#
+  # word_list_sub_db migration task
+  #
+  word-list-sub-db-migration-migration:
+    build:
+      context: ./word-list-sub-db-migration
+      dockerfile: Dockerfile
+    container_name: word-list-sub-db-migration
+    environment:
+    - 'DATASOURCE_USERNAME=test'
+    - 'DATASOURCE_PASSWORD=secret'
+    - 'DATASOURCE_JDBC_URL=jdbc:mysql://word-list-sub-db/word-list-sub-db'
+    networks:
+    - backend
+
+# @services|/Users/iwauo.tajima/.laplacian/cache/laplacian-arch.dataset-flyway-migration-template-1.0.0/environments/{each environments as environment}/{hyphen environment.name}/{each environment.deployments as deployment}/docker-compose_services_.yaml.hbs@
+# @+services@
+# @services@

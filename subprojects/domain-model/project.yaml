@@ -1,0 +1,9 @@
+project:
+  group: laplacian-sample
+  name: domain-model
+  type: domain-model
+  namespace: laplacian.sample
+  version: '1.0.0'
+  description:
+    en: |
+      The domain-model project.

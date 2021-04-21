@@ -1,0 +1,15 @@
+"""
+The root query resolver for the data_file_sample type group.
+"""
+type DataFileSample {
+  """
+  The word_lists field.
+  """
+  wordLists: [DataFileSampleWordList]
+  """
+  The words field.
+  """
+  words(
+    lemmas: [String!],
+  ): [DataFileSampleWord]
+}

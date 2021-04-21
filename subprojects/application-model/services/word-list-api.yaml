@@ -1,0 +1,40 @@
+services:
+- name: word_list_api
+  version: '1.0.0'
+  graphql_type_entries:
+  - group: mybatis_sample
+    name: word_list
+  - group: mybatis_sample
+    name: word
+  - group: data_file_sample
+    name: word_list
+  - group: data_file_sample
+    name: word
+  - group: rest_api_sample
+    name: word_list
+  - group: rest_api_sample
+    name: word
+  - group: multi_db_sample
+    name: word_list
+  - group: multi_db_sample
+    name: word
+#   - group: custom_fetcher_sample
+#     name: word_list
+#   - group: custom_fetcher_sample
+#     name: word
+  datasource_entries:
+  - name: word_list_main_db
+  - name: word_list_sub_db
+
+service_configurations:
+- category: google-spreadsheet
+  name: api-key
+  type: string
+  default_value: |
+    [API_KEY]
+
+- name: spreadsheet-id
+  category: rest-api-sample-word
+  type: string
+  default_value: |
+    [SPREAD_SHEET_ID]

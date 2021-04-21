@@ -1,0 +1,46 @@
+graphql_types:
+- name: word
+  group: rest_api_sample
+  data_model_name: word
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: words
+    field_type: graphql_type
+    root_field: true
+    multiple: true
+    graphql_type_name: word
+    graphql_type_group: rest_api_sample
+    arguments:
+    - name: lemmas
+      type: string
+      multiple: true
+    fetcher:
+      type: rest_api
+      rest_resource_name: google_spreadsheet
+      rest_operation_name: get_values
+      argument_assignments:
+      - key: range
+        value:
+          from: expression
+          expression: |
+            "A:E"
+      - key: spreadsheet_id
+        value:
+          from: graphql_type_config
+          name: spreadsheet-id
+      result_mapper: |
+        val records= result.getAs<List<List<String>>>("values") ?: emptyList()
+        Word.from(records.drop(1).map { record ->
+            mapOf(
+                "lemma" to record[0],
+                "rank" to record[1]?.toInt(),
+                "frequency" to record[2]?.toInt(),
+                "japanese" to record[3],
+                "commentary" to record[4],
+            )
+        })
+
+  configurations:
+  - name: spreadsheet-id
+    category: rest-api-sample-word

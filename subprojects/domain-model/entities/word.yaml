@@ -1,0 +1,19 @@
+entities:
+- name: word
+  namespace: laplacian.sample
+  properties:
+  - name: lemma
+    type: string
+    primary_key: true
+
+  - name: rank
+    type: number
+
+  - name: frequency
+    type: number
+
+  - name: japanese
+    type: string
+
+  - name: commentary
+    type: string

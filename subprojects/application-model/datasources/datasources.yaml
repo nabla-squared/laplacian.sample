@@ -1,0 +1,8 @@
+datasources:
+- name: word_list_main_db
+  db_type: postgres
+  non_blocking: false
+
+- name: word_list_sub_db
+  db_type: mysql
+  non_blocking: false

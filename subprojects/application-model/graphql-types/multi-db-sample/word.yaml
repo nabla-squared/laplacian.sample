@@ -1,0 +1,28 @@
+graphql_types:
+- name: word
+  group: multi_db_sample
+  data_model_name: word
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: words
+    field_type: graphql_type
+    root_field: true
+    multiple: true
+    graphql_type_name: word
+    graphql_type_group: multi_db_sample
+    arguments:
+    - name: lemmas
+      type: string
+      multiple: true
+    fetcher:
+      type: mybatis
+      datasource_name: word_list_sub_db
+      statement_type: select
+      statement: |
+        SELECT *
+        FROM t_word
+        <if test="args.lemmas.size > 0">
+        WHERE
+          lemma IN <foreach item="lemma" collection="args.lemmas" separator="," open="(" close=")">#{lemma}</foreach>
+        </if>

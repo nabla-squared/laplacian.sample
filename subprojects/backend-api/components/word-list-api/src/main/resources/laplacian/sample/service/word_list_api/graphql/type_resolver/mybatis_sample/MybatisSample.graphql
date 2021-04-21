@@ -1,0 +1,17 @@
+"""
+The root query resolver for the mybatis_sample type group.
+"""
+type MybatisSample {
+  """
+  The word_lists field.
+  """
+  wordLists(
+    names: [String!],
+  ): [MybatisSampleWordList]
+  """
+  The words field.
+  """
+  words(
+    lemmas: [String!],
+  ): [MybatisSampleWord]
+}

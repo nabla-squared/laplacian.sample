@@ -1,0 +1,26 @@
+graphql_types:
+- name: word_list
+  group: custom_fetcher_sample
+  data_model_name: word_list
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: word_lists
+    multiple: true
+    field_type: graphql_type
+    root_field: true
+    graphql_type_name: word_list
+    graphql_type_group: custom_fetcher_sample
+    fetcher:
+      type: custom
+      async: true
+
+  - name: content
+    context_data_model_name: word_list_entry
+    field_type: graphql_type
+    graphql_type_name: word
+    graphql_type_group: custom_fetcher_sample
+    fetcher:
+      type: custom
+      async: false
+

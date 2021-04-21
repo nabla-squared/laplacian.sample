@@ -1,0 +1,28 @@
+plugins {
+    id 'maven-publish'
+    id 'java'
+}
+
+group = "domain-model"
+version = "1.0.0"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'mysql:mysql-connector-java:8.0.23'
+    compile 'org.flywaydb:flyway-core:7.5.1'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'db.migration.JdbcMigration'
+    }
+    baseName = "db-migrate"
+    from {
+        configurations.compile.collect {
+            it.directory ? it : zipTree(it)
+        }
+    }
+}

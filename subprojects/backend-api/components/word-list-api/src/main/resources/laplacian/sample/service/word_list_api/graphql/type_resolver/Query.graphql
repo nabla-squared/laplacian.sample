@@ -1,0 +1,25 @@
+scalar Date
+scalar Time
+scalar DateTime
+
+"""
+The root query schema definition of word_list_api.
+"""
+type Query {
+  """
+  mybatis_sample
+  """
+  mybatisSample: MybatisSample
+  """
+  data_file_sample
+  """
+  dataFileSample: DataFileSample
+  """
+  rest_api_sample
+  """
+  restApiSample: RestApiSample
+  """
+  multi_db_sample
+  """
+  multiDbSample: MultiDbSample
+}

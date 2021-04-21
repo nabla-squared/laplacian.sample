@@ -1,0 +1,60 @@
+datasets:
+- name: word-list@local
+  content:
+  - _class_: word_list
+    name: word_list_1
+    content:
+    - lemma: hoge
+    - lemma: fuga
+    - lemma: piyo
+  - _class_: word_list
+    name: word_list_2
+    content:
+    - lemma: hoge
+    - lemma: piyo
+  - _class_: word_list
+    name: word_list_3
+    content:
+    - lemma: hoge
+
+- name: word@local
+  content:
+  - _class_: word
+    lemma: hoge
+    frequency: 1
+    commentary: The hoge.
+    japanese: ほげ
+    rank: 1
+  - _class_: word
+    lemma: fuga
+    frequency: 2
+    commentary: The fuga.
+    japanese: ふが
+    rank: 2
+  - _class_: word
+    lemma: piyo
+    frequency: 3
+    commentary: The piyo.
+    japanese: ぴよぴよ
+    rank: 3
+
+- name: word_sub@local
+  content:
+  - _class_: word
+    lemma: hoge
+    frequency: 1
+    commentary: The hoge.
+    japanese: ほげ(sub)
+    rank: 1
+  - _class_: word
+    lemma: fuga
+    frequency: 2
+    commentary: The fuga.
+    japanese: ふが(sub)
+    rank: 2
+  - _class_: word
+    lemma: piyo
+    frequency: 3
+    commentary: The piyo.
+    japanese: ぴよぴよ(sub)
+    rank: 3

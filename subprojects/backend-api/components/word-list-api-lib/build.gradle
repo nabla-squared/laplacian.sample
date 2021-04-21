@@ -1,0 +1,46 @@
+plugins {
+  id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+  id 'maven-publish'
+}
+
+group = "laplacian.sample"
+version = "1.0.0"
+
+defaultTasks 'build'
+
+repositories {
+  maven { url '../../mvn-repo' }
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+  implementation 'org.jetbrains.kotlin:kotlin-reflect'
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinCoroutineVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$kotlinCoroutineVersion"
+  implementation "com.graphql-java:graphql-java:$graphqlJavaVersion"
+
+  testImplementation 'org.jetbrains.kotlin:kotlin-test'
+  testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    freeCompilerArgs = [ '-Xjsr305=strict' ]
+    jvmTarget = "$kotlinJvmTarget"
+  }
+}
+
+publishing {
+    repositories {
+        maven {
+            url '../../mvn-repo'
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}

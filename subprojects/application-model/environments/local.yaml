@@ -1,0 +1,40 @@
+environments:
+- name: local
+  tier: local
+
+  deployments:
+  - name: word_list_api
+    type: springboot2_api_service_container_deployment
+    enable_debug: true
+    data_files:
+    - filename: word-lists.json
+      dataset_name: word-list@local
+    - filename: words.json
+      dataset_name: word@local
+    datasources:
+    - name: word_list_main_db
+      type: postgres_jdbc
+      username: test
+      password: secret
+    - name: word_list_sub_db
+      type: mysql_jdbc
+      username: test
+      password: secret
+
+  - name: word_list_main_db
+    type: postgres_container_deployment
+    username: test
+    password: secret
+    initial_data:
+    - table_model_name: word_list
+      dataset_name: word-list@local
+    - table_model_name: word
+      dataset_name: word@local
+
+  - name: word_list_sub_db
+    type: mysql_container_deployment
+    username: test
+    password: secret
+    initial_data:
+    - table_name: word
+      dataset_name: word_sub@local

@@ -1,0 +1,3 @@
+components:
+- name: word_list_sub_db
+  type: mysql_container_image

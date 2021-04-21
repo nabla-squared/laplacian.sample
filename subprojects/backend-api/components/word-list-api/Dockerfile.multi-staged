@@ -1,0 +1,13 @@
+FROM gradle:6.6.1-jdk AS build
+COPY --chown=gradle:gradle . /home/gradle/
+WORKDIR /home/gradle
+RUN gradle build --no-daemon
+
+
+FROM adoptopenjdk:11-jdk-hotspot
+RUN mkdir /app
+WORKDIR /app
+COPY ./entrypoint.sh entrypoint.sh
+COPY --from=build /home/gradle/build/libs/word-list-api*.jar api.jar
+
+ENTRYPOINT ["/app/entrypoint.sh"]

@@ -1,0 +1,3 @@
+components:
+- name: word_list_main_db
+  type: postgres_container_image

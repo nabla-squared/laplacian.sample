@@ -1,0 +1,26 @@
+graphql_types:
+- name: word_list
+  group: rest_api_sample
+  data_model_name: word_list
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: word_lists
+    multiple: true
+    field_type: graphql_type
+    root_field: true
+    graphql_type_name: word_list
+    graphql_type_group: rest_api_sample
+    arguments:
+    - name: names
+      type: string
+      multiple: true
+    fetcher:
+      type: rest_api
+      rest_resource_name: google_spreadsheet
+      rest_operation_name: get_values
+      result_mapper: |
+        val records= result.getAs<List<List<String>>>("values") ?: emptyList()
+        WordList.from(records.map { record ->
+            mapOf("name" to record[0], "content" to emptyList<Any>())
+        })

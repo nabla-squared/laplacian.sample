@@ -1,0 +1,13 @@
+"""
+A graphql type representing an item of word_list.
+"""
+type MultiDbSampleWordListEntry {
+    """
+    The lemma of this word_list_entry.
+    """
+    lemma: String!,
+    """
+    The content field.
+    """
+    content: MultiDbSampleWord!,
+}

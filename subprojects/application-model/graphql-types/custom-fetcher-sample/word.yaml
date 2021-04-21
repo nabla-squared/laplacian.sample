@@ -1,0 +1,20 @@
+graphql_types:
+- name: word
+  group: custom_fetcher_sample
+  data_model_name: word
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: words
+    field_type: graphql_type
+    root_field: true
+    multiple: true
+    graphql_type_name: word
+    graphql_type_group: custom_fetcher_sample
+    arguments:
+    - name: lemmas
+      type: string
+      multiple: true
+    fetcher:
+      type: custom
+      async: false

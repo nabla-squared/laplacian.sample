@@ -1,0 +1,13 @@
+"""
+A graphql type representing an item of word_list.
+"""
+type DataFileSampleWordList {
+    """
+    The name of this word_list.
+    """
+    name: String!,
+    """
+    The content of this word_list.
+    """
+    content: [DataFileSampleWordListEntry!]!,
+}

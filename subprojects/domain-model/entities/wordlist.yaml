@@ -1,0 +1,33 @@
+entities:
+- name: word_list
+  namespace: laplacian.sample
+  properties:
+  - name: name
+    type: string
+    primary_key: true
+
+  relationships:
+  - name: content
+    reference_entity_name: word_list_entry
+    cardinality: '*'
+    aggregate: true
+
+- name: word_list_entry
+  namespace: laplacian.sample
+  properties:
+  - name: lemma
+    type: string
+    primary_key: true
+
+  relationships:
+  - name: word_list
+    reference_entity_name: word_list
+    cardinality: '1'
+    reverse_of: content
+
+  - name: word
+    reference_entity_name: word
+    cardinality: '1'
+    mappings:
+    - from: lemma
+      to: lemma

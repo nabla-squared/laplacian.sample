@@ -1,0 +1,24 @@
+graphql_types:
+- name: word
+  group: data_file_sample
+  data_model_name: word
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: words
+    field_type: graphql_type
+    root_field: true
+    multiple: true
+    graphql_type_name: word
+    graphql_type_group: data_file_sample
+    arguments:
+    - name: lemmas
+      type: string
+      multiple: true
+    fetcher:
+      type: data_file
+      data_file:
+        name: words
+        format: json
+      result_selector: |
+        args.lemmas.contains(result.lemma)

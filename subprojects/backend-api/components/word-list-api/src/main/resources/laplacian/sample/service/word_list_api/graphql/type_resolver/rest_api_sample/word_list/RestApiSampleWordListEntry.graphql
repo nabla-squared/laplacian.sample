@@ -1,0 +1,9 @@
+"""
+A graphql type representing an item of word_list.
+"""
+type RestApiSampleWordListEntry {
+    """
+    The lemma of this word_list_entry.
+    """
+    lemma: String!,
+}

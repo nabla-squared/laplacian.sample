@@ -1,0 +1,31 @@
+graphql_types:
+- name: word_list
+  group: data_file_sample
+  data_model_name: word_list
+  data_model_namespace: laplacian.sample
+
+  fields:
+  - name: word_lists
+    multiple: true
+    field_type: graphql_type
+    root_field: true
+    graphql_type_name: word_list
+    graphql_type_group: data_file_sample
+    fetcher:
+      type: data_file
+      data_file:
+        name: word_lists
+        format: json
+
+  - name: content
+    context_data_model_name: word_list_entry
+    field_type: graphql_type
+    graphql_type_name: word
+    graphql_type_group: data_file_sample
+    fetcher:
+      type: data_file
+      data_file:
+        name: words
+        format: json
+      result_selector: |
+        result.lemma == self.lemma
