@@ -12,5 +12,4 @@ target/
 .classpath
 bin/
 .settings/
-.vscode/
 mvn-repo/

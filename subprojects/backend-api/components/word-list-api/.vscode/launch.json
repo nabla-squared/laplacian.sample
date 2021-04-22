@@ -1,0 +1,23 @@
+{
+ "version": "0.2.0",
+  "configurations": [
+		{
+			"type": "kotlin",
+			"request": "launch",
+      "name": "Debug Kotlin",
+    	"projectRoot": "${workspaceFolder}",
+      "mainClass": "laplacian.sample.service.word_list_api.WordListApiApplicationKt",
+      "logLevel": "INFO"
+		},
+    {
+      "type": "kotlin",
+      "name": "Debug (Attach)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5060,
+      "projectRoot": "${workspaceFolder}",
+      "timeout": 30000,
+      "logLevel": "INFO"
+    }
+  ]
+}
